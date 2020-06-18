@@ -21,7 +21,7 @@ describe('server.js', () => {
       expect(response.status).toEqual(200);
     })
 
-    it('should return json object', async () => {
+    it('should return empty array', async () => {
       const response = await request(server).get('/');
 
       expect(response.body).toEqual([]);
@@ -41,7 +41,7 @@ describe('server.js', () => {
       expect(response.status).toEqual(201);
     })
 
-    it('should return json object', async () => {
+    it('should return new test object', async () => {
       const response = await request(server).post('/').send({ name: 'test'});
 
       expect(response.body).toEqual({ id: 1, name: 'test' });
@@ -50,12 +50,13 @@ describe('server.js', () => {
 
   describe('test DELETE base root', () => {
     it('should return 200 status', async () => {
+      await request(server).post('/').send({ name: 'test' });
       const response = await request(server).delete('/1');
 
       expect(response.status).toEqual(200);
     })
 
-    it('should return json object', async () => {
+    it('should delete and return json object', async () => {
       await request(server).post('/').send({ name: 'test' });
       const response = await request(server).delete('/1');
 
